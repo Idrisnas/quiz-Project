@@ -54,3 +54,18 @@ showWinnerBtn.addEventListener('click', showWinner);
 closeModalBtn.addEventListener('click', () => {
     winnerModal.classList.add("hidden");
 });
+
+
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+// Toggle mobile menu on hamburger button click
+hamburgerBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
+
+// Close the mobile menu when the close button is clicked
+closeMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
+});
