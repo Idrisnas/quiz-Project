@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Fetch API</title>
+</head>
+
+<body>
+    <header>
+        <nav class="flex items-center justify-between p-2 fixed w-full  top-0 mb-10 ">
+            <a href="#" class="text-green-600 font-bold text-2xl">LUMEN VERITAS</a>
+            <div class="flex  w-[60%] justify-between gap-2">
+                <a href="index.html" class="text-green-600 hover:text-green-900 font-semibold">Home</a>
+                <a href="#" class="text-green-600 hover:text-green-900 font-semibold">Contacts</a>
+                <a href="#" class="text-green-600 hover:text-green-900 font-semibold">About</a>
+                <a href="result.html" class="text-green-600 hover:text-green-900 font-semibold">Result</a>
+                <!-- <a href="login.html">
+                    <button class="bg-blue-600 text-white rounded hover:bg-blue-700 p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed" id="quizBtn">Take Quiz</button>
+                </a> -->
+    
+            </div>
+        </nav>
+    </header>
+
+    <div class="mx-auto  w-[70%] p-8 rounded-lg shadow-md mt-10">
+        <div class="mb-6">
+            <h2 class="text-2xl font-semibold text-green-600">Welcome to Lumen et Veritas International Academy Quiz Competition: <span
+                    id="deadline" class="text-gray-600">Please Log in with your name and school name</span></h2>
+
+        </div>
+
+        <!-- Login Form -->
+        <form id="registrationForm" class="space-y-4">
+            
+            <div>
+                <input id="schoolName" type="text" class="w-full p-2 border rounded" placeholder="School Name"><span
+                    class="text-red-500 hidden" id="aError">School Name is required</span>
+            </div>
+            <div>
+
+                <input type="text" id="studentNames" class="w-full p-2 border rounded"
+                    placeholder="Candidate Name"><span class="text-red-500 hidden" id="bError">Students Names are
+                    required</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <button class=" p-2 bg-blue-600 text-white rounded hover:bg-blue-700" id="submit">Take Quiz Now!</button>
+                <div>
+                    <p class="text-gray-500">Not Registered?</p>
+                <a href="index.html" class="text-green-900 hover:text-green-600">Proceed to
+                    Sign up
+                </a>
+            </div>
+            </div>
+        </form>
+
+        <!-- Late Fee Warning (visible if deadline is passed) -->
+        <div id="lateFee" class="text-red-600 mt-4 hidden">
+            <p>Registration deadline has passed. A fee of N5,000 is required to proceed.</p>
+        </div>
+    </div>
+
+
+    <script src="login.js"></script>
+</body>
+
+</html>

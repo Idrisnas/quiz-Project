@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .selected {
+            background-color: #4CAF50; /* Green background for selected answer */
+            color: white; /* White text */
+        }
+
+        .next-active {
+            background-color: #4CAF50; /* Green background for next button when active */
+            cursor: pointer;
+        }
+
+        .next-disabled {
+            background-color: #cccccc; /* Grey background for next button when disabled */
+            cursor: not-allowed;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans flex items-center justify-center min-h-screen">
+
+<div id="quiz-container" class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+    <!-- Title Section -->
+    <h1 class="text-3xl font-bold text-center mb-6">General Knowledge Quiz</h1>
+
+    <!-- Question Box -->
+    <div id="question-box" class="mb-4">
+        <p id="question" class="text-xl text-center text-gray-700">Loading question...</p>
+    </div>
+
+    <!-- Answer Buttons -->
+    <div id="answers" class="space-y-3">
+        <button class="answer-btn w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300" id="answer1">Answer 1</button>
+        <button class="answer-btn w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300" id="answer2">Answer 2</button>
+        <button class="answer-btn w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300" id="answer3">Answer 3</button>
+        <button class="answer-btn w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300" id="answer4">Answer 4</button>
+    </div>
+
+    <!-- Timer Section -->
+    <div id="timer" class="mt-6 text-center text-xl text-gray-700">
+        Time Left: <span id="timeLeft" class="font-semibold">120s</span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-6 flex justify-between">
+        <button id="nextBtn" disabled class="bg-gray-300 text-white py-2 px-4 rounded-lg next-disabled">Next Question</button>
+        <button id="endQuizBtn" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">End Quiz</button>
+    </div>
+</div>
+
+<script>
+    // Define questions
+    const questions = [
+        { question: "What is the capital of France?", answers: ["Paris", "London", "Rome", "Berlin"], correct: 0 },
+        { question: "Who wrote 'Hamlet'?", answers: ["Charles Dickens", "William Shakespeare", "J.K. Rowling", "Leo Tolstoy"], correct: 1 },
+        { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: 1 },
+        { question: "What is the chemical symbol for water?", answers: ["O2", "H2O", "CO2", "NaCl"], correct: 1 },
+        { question: "What is my name?", answers: ["nas", "paul", "CO2", "NaCl"], correct: 0 },
+        { question: "Who is the host of the quiz?", answers: ["atlantic school", "Lumen schools", "CO2", "NaCl"], correct: 1 }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timer = 120;
+    let interval;
+    let totalQuestions = questions.length;
+
+    // Shuffle the questions
+    function shuffleQuestions() {
+        for (let i = questions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [questions[i], questions[j]] = [questions[j], questions[i]]; // Swap elements
+        }
+    }
+
+    // Start the timer
+    function countdown() {
+        timer--;
+        document.getElementById("timer").textContent = `Time Left: ${timer}s`;
+        if (timer <= 0) {
+            endQuiz(); // End quiz when time runs out
+        }
+    }
+
+    // Load a question into the DOM
+    function loadQuestion() {
+        let currentQuestion = questions[currentQuestionIndex];
+
+        // Update question text and answers
+        document.getElementById("question").textContent = currentQuestion.question;
+        document.getElementById("answer1").textContent = currentQuestion.answers[0];
+        document.getElementById("answer2").textContent = currentQuestion.answers[1];
+        document.getElementById("answer3").textContent = currentQuestion.answers[2];
+        document.getElementById("answer4").textContent = currentQuestion.answers[3];
+
+        // Reset the timer for the entire quiz
+        clearInterval(interval); // Clear previous intervals
+        interval = setInterval(countdown, 1000); // Start the countdown
+    }
+
+    // Handle the answer submission
+    function submitAnswer(selectedAnswerIndex, selectedButton) {
+        clearInterval(interval); // Stop the timer after answer submission
+        let currentQuestion = questions[currentQuestionIndex];
+
+        // Check if the selected answer is correct
+        if (selectedAnswerIndex === currentQuestion.correct) {
+            score++;
+            selectedButton.classList.add('selected'); // Add background color to correct button
+        } else {
+            selectedButton.classList.add('selected'); // Add background color to the selected answer
+        }
+
+        // Disable all answer buttons after selection
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        answerButtons.forEach(button => button.disabled = true);
+
+        // Enable the next button and change its color to green
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.disabled = false;
+        nextBtn.classList.remove('next-disabled');
+        nextBtn.classList.add('next-active');
+    }
+
+    // Move to the next question
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion(); // Load the next question
+        } else {
+            endQuiz(); // End quiz if no questions are left
+        }
+
+        // Reset the buttons for the next question
+        const answerButtons = document.querySelectorAll('.answer-btn');
+        answerButtons.forEach(button => {
+            button.classList.remove('selected');
+            button.disabled = false;
+        });
+
+        // Disable the next button again
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.disabled = true;
+        nextBtn.classList.remove('next-active');
+        nextBtn.classList.add('next-disabled');
+    }
+
+    // End the quiz and display the score
+    function endQuiz() {
+        clearInterval(interval); // Stop the timer
+        alert(`Quiz ended! Your score is ${score} out of ${questions.length}.`);
+        location.reload(); // Reload the page for a fresh start
+    }
+
+    // Event listeners for the answer buttons
+    document.getElementById("answer1").addEventListener("click", function () { submitAnswer(0, this); });
+    document.getElementById("answer2").addEventListener("click", function () { submitAnswer(1, this); });
+    document.getElementById("answer3").addEventListener("click", function () { submitAnswer(2, this); });
+    document.getElementById("answer4").addEventListener("click", function () { submitAnswer(3, this); });
+
+    // Event listener for the next question button
+    document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+
+    // Event listener for the end quiz button
+    document.getElementById("endQuizBtn").addEventListener("click", endQuiz);
+
+    // Shuffle questions and initialize the first question when the document is ready
+    shuffleQuestions();
+    loadQuestion();
+</script>
+
+</body>
+</html>

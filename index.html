@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Lumen Quiz</title>
+</head>
+
+<body class="bg-gray-100 w-full">
+<header>
+    <nav class="flex items-center justify-between p-2 fixed w-full bg-white top-0 mb-10">
+        <a href="#" class="text-green-600 font-bold text-2xl ">LUMEN VERITAS</a>
+        <div class="flex  w-[60%] justify-between gap-2 items-center">
+            <a href="#" class="text-green-600 hover:text-green-900 font-semibold">Contacts</a>
+            <a href="#" class="text-green-600 hover:text-green-900 font-semibold">About</a>
+            <a href="result.html" class="text-green-600 hover:text-green-900 font-semibold">Result</a>
+            <a href="login.html">
+                <button class="bg-blue-600 text-white rounded hover:bg-blue-700 p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed" id="quiz-Btn">Take Quiz</button>
+            </a>
+
+        </div>
+    </nav>
+</header>
+    <div class="p-6 mt-10 w-full">
+        <header class="text-center py-4">
+            <h1 class="text-4xl font-bold text-green-700">Lumen et Veritas International Academy Quiz Competition</h1>
+            <p class="text-gray-600 mt-2">Held every November 21st</p>
+        </header>
+
+        <div class="bg-white p-8 rounded-lg shadow-md leading-10 w-[80%] mx-auto">
+            <!-- Countdown Timer -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold">Registration Deadline: <span id="deadline" class="text-red-600">November 16, 2024 at 11:20 PM</span></h2>
+                <p class="text-gray-500">Remaining Time: <span id="countdown" class="font-bold"></span></p>
+            </div>
+
+            <div class="flex justify-between">
+                <a href="signup.html">
+                    <button class="bg-blue-600 text-white rounded hover:bg-blue-700 p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed" id="regBtn">Proceed to Registration</button>
+                </a>
+                <a href="login.html">
+                    <button class="bg-blue-600 text-white rounded hover:bg-blue-700 p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed" id="quizBtn">Proceed to Take Quiz</button>
+                </a>
+            </div>
+
+            <!-- Late Fee Warning (visible if deadline is passed) -->
+            <div id="lateFee" class="text-red-600 mt-4 hidden">
+                <p>Registration deadline has passed. A fee of N5,000 is required to proceed.</p>
+                <a href="payment.html"><button class="bg-blue-600 text-white rounded hover:bg-blue-700 p-2">Proceed to make Payment</button></a>
+            </div>
+        </div>
+
+
+
+        
+        <!-- Previous Winners List -->
+        <section class=" mx-auto mt-10 w-[70%]">
+            <h2 class="text-2xl font-semibold mb-4">Previous Winners</h2>
+            <ul id="previousWinners" class="space-y-2">
+                <!-- show  winners here -->
+            </ul>
+        </section>
+    </div>
+<script src="script.js"></script>
+    <script>
+        
+    </script>
+</body>
+
+</html>
